@@ -1,0 +1,131 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#132A21">
+<link rel="stylesheet" href="gg.css">
+<title>Post a goal · Goal Groups</title>
+<style>
+.phero{background:var(--pine-dd);color:var(--snow);padding:44px 0 110px;overflow:hidden}
+.phero .topo-bg svg{color:#9fd0b6;opacity:.13}
+.phero h1{font-size:clamp(2.3rem,6vw,3.8rem);margin:14px 0 12px}
+.pwrap{position:relative;z-index:2;margin-top:-80px;padding-bottom:80px;display:grid;gap:28px;align-items:start}
+@media(min-width:980px){.pwrap{grid-template-columns:1.15fr .85fr}}
+.formcard{background:var(--snow);border-radius:24px;padding:26px;box-shadow:var(--shadow)}
+@media(min-width:760px){.formcard{padding:36px}}
+.row2{display:grid;gap:0 16px}@media(min-width:600px){.row2{grid-template-columns:1fr 1fr}}
+.rangeval{font-family:Fraunces,serif;font-weight:600;font-size:1.3rem;color:var(--pine-d)}
+.preview-col{position:sticky;top:90px}
+.preview-col .lbl{font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--stone);margin-bottom:14px;display:block}
+.minicork{background-color:var(--cork);background-image:var(--grain),radial-gradient(ellipse at 50% 0%,#c99d6c,#a87c4d 70%);border-radius:22px;padding:34px 24px;box-shadow:inset 0 0 0 8px #6f4a2a,0 16px 40px rgba(23,34,29,.2)}
+.result{display:none;position:relative;z-index:2}
+.result.show{display:grid;gap:30px;align-items:start}
+@media(min-width:900px){.result.show{grid-template-columns:1fr auto}}
+.result .sc{margin:0 auto}
+.done-card{background:var(--snow);border-radius:24px;padding:28px;box-shadow:var(--shadow)}
+.done-card h2{font-size:clamp(1.8rem,4vw,2.6rem)}
+</style></head><body>
+<div class="preview-note">Early version · goals posted here are shared on the board · example pins are fictional and marked · <a href="privacy.html" style="color:inherit">Privacy</a></div>
+<div class="sticky-nav"><div class="wrap nav">
+ <a class="logo" href="index.html" data-logo>Goal Groups</a>
+ <nav class="nav-links"><a href="index.html#how">How it works</a><a href="share.html">Share</a><a href="index.html#reputation">Reputation</a><a href="board.html">The board</a><a href="index.html#faq">FAQ</a></nav>
+ <a class="btn sm" href="post.html">Post a goal</a>
+</div></div>
+<header class="phero grain"><div class="topo-bg" data-topo="6"></div><div class="wrap on-dark">
+ <span class="eyebrow">Post a goal</span>
+ <h1 id="ph1">Post the goal you keep <em class="hl">meaning to do.</em></h1>
+ <p class="lede" id="plede">Takes a minute. Then share it and gather your spotters. Your pin shows your first name and town only.</p>
+</div></header>
+<main class="wrap">
+ <div class="pwrap" id="formwrap">
+  <form class="formcard" id="postForm" novalidate onsubmit="return false" autocomplete="off">
+   <div class="field"><span class="lbl">This is a…</span>
+    <div class="seg">
+     <input type="radio" name="kind" id="k0" value="Looking for spotters" checked><label for="k0">Looking for spotters</label>
+     <input type="radio" name="kind" id="k1" value="Trying to achieve"><label for="k1">Trying to achieve</label>
+     <input type="radio" name="kind" id="k2" value="Looking for"><label for="k2">Looking for</label>
+     <input type="radio" name="kind" id="k3" value="In need of"><label for="k3">In need of</label>
+    </div></div>
+   <div class="field"><label for="title">Your goal</label><input type="text" id="title" maxlength="90" placeholder="e.g. First 14er by July, need people who’ll train with me"><span class="hint">Make it specific and dated. “Run more” is a wish. “First 5K by March 15” is a goal.</span></div>
+   <div class="row2">
+    <div class="field"><label for="cat">Category</label><select id="cat"></select></div>
+    <div class="field"><label for="start">When do you start? <span class="muted" style="font-weight:400">(optional)</span></label><input type="date" id="start"></div>
+   </div>
+   <div class="field"><label for="due">Done by</label><input type="date" id="due"><span class="hint">On this date your spotters tap Saw it or Didn’t happen. That builds your show-up rate.</span></div>
+   <div class="row2">
+    <div class="field"><label for="by">Your first name</label><input type="text" id="by" maxlength="20" placeholder="First name only"></div>
+    <div class="field"><label for="town">Town <span class="muted" style="font-weight:400">(optional)</span></label><input type="text" id="town" maxlength="32" placeholder="e.g. Dolores, CO or Remote"><span class="hint">Town-level only. Never your address.</span></div>
+   </div>
+   <div class="field"><label for="email">Email <a class="privacy-link" href="privacy.html" target="_blank" rel="noopener">How we use it</a></label><input type="email" id="email" maxlength="120" autocomplete="email" placeholder="you@example.com"><span class="hint">Never shown on the board. It ties your goals to one show-up rate.</span></div>
+   <div class="hp" aria-hidden="true"><label for="website">Website</label><input type="text" id="website" tabindex="-1" autocomplete="off"></div>
+   <div class="field"><span class="lbl">Who can spot?</span>
+    <div class="seg">
+     <input type="radio" name="vis" id="v1" value="board" checked><label for="v1">Anyone on the board</label>
+     <input type="radio" name="vis" id="v2" value="link"><label for="v2">Only people with my link</label>
+    </div><span class="hint">Spotters see your check-ins. They never see your address. Crew does it with you. Spotters keep an eye on you.</span></div>
+   <label class="switch" for="crewOn"><input type="checkbox" id="crewOn"><span><b>Open a crew too</b><br><span class="muted small">Optional. Let people join and do it with you. The crew starts once it fills to your number.</span></span></label>
+   <div id="crewBox" hidden style="margin-top:18px">
+   <div class="row2">
+    <div class="field"><label for="cap">Crew size: <span class="rangeval" id="capv">8</span></label><input type="range" id="cap" min="2" max="12" value="8"><span class="hint">Including you.</span></div>
+    <div class="field"><label for="lock">Locks at: <span class="rangeval" id="lockv">6</span></label><input type="range" id="lock" min="2" max="8" value="6"><span class="hint">The crew starts once this many have joined.</span></div>
+   </div>
+   <div class="field"><span class="lbl">Fill deadline</span>
+    <div class="seg">
+     <input type="radio" name="fill" id="f3" value="3"><label for="f3">3 days</label>
+     <input type="radio" name="fill" id="f7" value="7" checked><label for="f7">7 days</label>
+     <input type="radio" name="fill" id="f14" value="14"><label for="f14">14 days</label>
+    </div><span class="hint">If it doesn’t fill in time, it rolls into a new round.</span></div>
+   </div>
+   <p class="small muted" style="margin:18px 0 0">Posting puts your first name, town and goal on the shared board (or link-only, if you picked that). Your email stays private. <a href="privacy.html">Privacy</a></p>
+   <div class="btn-row" style="margin-top:18px"><button type="button" class="btn" id="submitBtn">Post my goal</button><a class="btn ghost" href="board.html">Browse first</a></div>
+   <p class="small" id="err" style="color:#b4462a;margin:12px 0 0"></p>
+  </form>
+  <aside class="preview-col"><span class="lbl">Live preview</span><div class="minicork"><div id="livePin"></div></div></aside>
+ </div>
+ <div class="result" id="result" style="padding:0 0 80px;margin-top:-70px">
+  <div class="done-card">
+   <span class="eyebrow">Posted</span>
+   <h2 style="margin-top:10px">Your goal is up.</h2>
+   <p class="muted" id="resultLine"></p>
+   <div class="minicork" style="margin:20px 0"><div id="resultPin"></div></div>
+   <div class="btn-row"><a class="btn" id="toBoard" href="board.html">See it on the board</a><a class="btn ghost" id="toShare" href="share.html" style="color:var(--ink)">Open share card</a></div>
+   <p class="small muted" style="margin-top:14px" id="resultNote">This device keeps a private key to manage your goal. Clear your browser and you lose it, so email us if you need it removed later.</p>
+  </div>
+  <div id="resultShare"></div>
+ </div>
+</main>
+<footer class="site" style="padding:36px 0"><div class="wrap" style="display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between"><a class="logo" href="index.html" data-logo style="color:#fff">Goal Groups</a><span><a href="board.html">Board</a> · <a href="post.html">Post a goal</a> · <a href="privacy.html">Privacy</a> · <a href="preview.html">About this preview</a> · Early version</span></div></footer>
+<script src="gg.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+ const $=id=>document.getElementById(id);
+ $('cat').innerHTML=Object.entries(GG.CATS).filter(([k])=>k!=='all').map(([k,l])=>'<option value="'+k+'">'+l+'</option>').join('');
+ const today=new Date(Date.now()-new Date().getTimezoneOffset()*6e4).toISOString().slice(0,10);$('start').min=today;$('due').min=today;
+ const prof=GG.LS.get('gg_v3_profile',{});if(prof.name)$('by').value=prof.name;if(prof.email)$('email').value=prof.email;
+ const fmt=d=>d?'Starts '+GG.fmtDay(d):'Start date TBD';
+ function read(){const cap=+$('cap').value;const lk=$('lock');lk.max=cap;if(+lk.value>cap)lk.value=cap;$('capv').textContent=cap;$('lockv').textContent=lk.value;
+  const crew=$('crewOn').checked;$('crewBox').hidden=!crew;
+  return {kind:document.querySelector('[name=kind]:checked').value,title:$('title').value.trim()||'Your goal goes here',cat:$('cat').value,by:$('by').value.trim()||'You',town:$('town').value.trim(),
+   start:$('start').value||null,due:$('due').value||null,starts:fmt($('start').value),crew,cap:crew?cap:1,lockAt:crew?+lk.value:1,fillDays:+document.querySelector('[name=fill]:checked').value,vis:document.querySelector('[name=vis]:checked').value}}
+ function live(){const o=read();const v={...o,id:'preview',joined:1,witnesses:0,example:false,mine:true,solo:o.cap<=1,locked:1>=o.lockAt,need:Math.max(0,o.lockAt-1),left:o.fillDays,me:{},due:o.due||today,tier:'New · first goal'};$('livePin').innerHTML=GG.pinHTML(v)}
+ $('postForm').addEventListener('input',live);live();
+ const btn=$('submitBtn');
+ btn.addEventListener('click',async()=>{const o=read();const err=$('err');
+  if(!$('title').value.trim()){err.textContent='Add your goal first.';$('title').focus();return}
+  if(!$('by').value.trim()){err.textContent='Add your first name.';$('by').focus();return}
+  if(!/^\S+@\S+\.\S+$/.test($('email').value.trim())){err.textContent='Add a valid email. It stays private.';$('email').focus();return}
+  if(!o.due){err.textContent='Add a done-by date.';$('due').focus();return}
+  err.textContent='';btn.disabled=true;btn.textContent='Posting…';
+  let r;try{r=await GG.api.post({kind:o.kind,title:o.title,cat:o.cat,by:o.by,town:o.town,email:$('email').value.trim(),start:o.start,due:o.due,crew:o.crew,cap:o.cap,lockAt:o.lockAt,fillDays:o.fillDays,vis:o.vis,website:$('website').value})}
+  catch(x){err.textContent=x.message;btn.disabled=false;btn.textContent='Post my goal';return}
+  GG.remember(r.goal.id,r.editToken);GG.LS.set('gg_v3_profile',{name:o.by,email:$('email').value.trim()});
+  const v=GG.viewReal(r.goal);const id=v.id;
+  $('formwrap').style.display='none';$('result').classList.add('show');
+  $('ph1').innerHTML='Posted. Now <em class="hl">gather your spotters.</em>';$('plede').textContent='Share your card so the people who already follow you can spot it.';
+  $('resultLine').textContent=(v.vis==='link'?'Link-only: it won’t show on the board, only to people with your link. ':'It’s on the shared board. ')+(v.solo?'Share your card to gather spotters. On '+GG.fmtDay(v.due)+' they check in, and that builds your reputation.':'Crew: '+v.need+' more to lock in · '+v.left+' days to fill. Share your card to gather spotters too.');
+  $('resultPin').innerHTML=GG.pinHTML(v,{isNew:true});
+  $('resultShare').innerHTML=GG.shareHTML(v);
+  $('toBoard').href=v.vis==='link'?'goal.html?id='+encodeURIComponent(id):'board.html?new='+id;$('toBoard').textContent=v.vis==='link'?'Open your goal page':'See it on the board';$('toShare').href='share.html?id='+encodeURIComponent(id);
+  window.scrollTo({top:0,behavior:'smooth'});
+ });
+});
+</script></body></html>

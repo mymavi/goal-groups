@@ -1,0 +1,63 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#132A21">
+<link rel="stylesheet" href="gg.css">
+<title>Spot this goal · Goal Groups</title>
+<style>
+.ghero{background:var(--pine-dd);color:var(--snow);padding:44px 0 120px;overflow:hidden}
+.ghero .topo-bg svg{color:#9fd0b6;opacity:.13}
+.ghero h1{font-size:clamp(2.2rem,5.5vw,3.6rem);margin:14px 0 12px}
+.gwrap{position:relative;z-index:2;margin-top:-90px;padding-bottom:80px;display:grid;gap:28px;align-items:start}
+@media(min-width:900px){.gwrap{grid-template-columns:minmax(0,380px) 1fr}}
+.minicork{background-color:var(--cork);background-image:var(--grain),radial-gradient(ellipse at 50% 0%,#c99d6c,#a87c4d 70%);border-radius:22px;padding:34px 24px;box-shadow:inset 0 0 0 8px #6f4a2a,0 16px 40px rgba(23,34,29,.2)}
+.gcard{background:var(--snow);border-radius:24px;padding:26px;box-shadow:var(--shadow);margin-bottom:18px}
+.gcard h2{font-size:1.5rem;margin:0 0 10px}
+.names{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 0;padding:0;list-style:none}
+.names li{background:rgba(47,93,74,.1);color:var(--pine);font-weight:600;font-size:.86rem;padding:5px 11px;border-radius:999px}
+.tally{display:flex;gap:22px;font-family:Fraunces,serif;font-size:2rem;font-weight:600}
+.tally span{display:block;font-family:Inter,sans-serif;font-size:.78rem;font-weight:600;color:var(--stone);letter-spacing:.06em;text-transform:uppercase}
+</style></head><body>
+<div class="preview-note">Early version · goals posted here are shared on the board · <a href="privacy.html" style="color:inherit">Privacy</a></div>
+<div class="sticky-nav"><div class="wrap nav">
+ <a class="logo" href="index.html" data-logo>Goal Groups</a>
+ <nav class="nav-links"><a href="index.html#how">How it works</a><a href="share.html">Share</a><a href="index.html#reputation">Reputation</a><a href="board.html">The board</a><a href="index.html#faq">FAQ</a></nav>
+ <a class="btn sm" href="post.html">Post a goal</a>
+</div></div>
+<header class="ghero grain"><div class="topo-bg" data-topo="5"></div><div class="wrap on-dark">
+ <span class="eyebrow" id="geyebrow">Be a spotter</span>
+ <h1 id="gh1">Loading…</h1>
+ <p class="lede" id="glede"></p>
+</div></header>
+<main class="wrap gwrap">
+ <div><div class="minicork"><div id="pin"></div></div></div>
+ <div id="side"></div>
+</main>
+<footer class="site" style="padding:36px 0"><div class="wrap" style="display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between"><a class="logo" href="index.html" data-logo style="color:#fff">Goal Groups</a><span><a href="board.html">Board</a> · <a href="post.html">Post a goal</a> · <a href="privacy.html">Privacy</a> · <a href="preview.html">About this preview</a> · Early version</span></div></footer>
+<script src="gg.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded',async()=>{
+ const $=id=>document.getElementById(id);const id=new URLSearchParams(location.search).get('id')||'';
+ let v;
+ async function load(){try{v=await GG.getPin(id)}catch(e){$('gh1').textContent='Goal not found.';$('glede').innerHTML='It may have been removed. <a href="board.html" style="color:inherit">Browse the board</a>.';return false}return true}
+ function draw(){
+  $('pin').innerHTML=GG.pinHTML(v);
+  if(v.example){$('geyebrow').textContent='Example pin';$('gh1').innerHTML='This one is <em class="hl">an example.</em>';$('glede').textContent='Fictional, to show how the board works. Real goals are on the board.';$('side').innerHTML='<div class="gcard"><a class="btn" href="board.html">See real goals</a></div>';return}
+  const c=v.checkins||{saw:0,missed:0};
+  $('geyebrow').textContent=v.mine?'Your goal':(v.dueReached?'Check in':'Be a spotter');
+  $('gh1').innerHTML=v.mine?'Your goal. <em class="hl">Gather your spotters.</em>':(v.dueReached?'Did '+GG.esc(v.by)+' <em class="hl">show up?</em>':'Spot '+GG.esc(v.by)+'. <em class="hl">Keep it real.</em>');
+  $('glede').textContent=v.title;
+  let html='';
+  html+=`<div class="gcard"><h2>${v.witnesses} spotter${v.witnesses===1?'':'s'}</h2>${v.witnessNames.length?'<ul class="names">'+v.witnessNames.map(n=>'<li>'+GG.esc(n)+'</li>').join('')+'</ul>':'<p class="muted">No spotters yet.</p>'}
+   ${v.solo?'':`<p class="muted small" style="margin-top:14px">Crew: ${v.joined} of ${v.cap}${v.crewNames.length?' · with '+v.crewNames.map(GG.esc).join(', '):''}</p>`}</div>`;
+  html+=`<div class="gcard"><h2>Check-ins</h2>${v.dueReached?`<div class="tally"><div>${c.saw}<span>Saw it</span></div><div>${c.missed}<span>Didn’t happen</span></div></div><p class="muted small" style="margin-top:10px">Spotters can check in from the device they signed up on.</p>`:`<p class="muted">Open on <b>${GG.esc(GG.fmtDay(v.due))}</b>. Each spotter taps Saw it or Didn’t happen.</p>`}
+   <p class="small muted" style="margin-top:10px">${GG.esc(v.by)}’s record: <b>${GG.esc(v.tier)}</b></p></div>`;
+  if(v.mine)html+=`<div class="gcard"><h2>Manage</h2><div class="btn-row"><a class="btn" href="share.html?id=${encodeURIComponent(v.id)}">Make your share card</a><button type="button" class="btn ghost" id="rm" style="color:#b4462a">Remove this goal</button></div><p class="small muted" style="margin-top:12px">Removing deletes the goal, its spotters and check-ins.</p></div>`;
+  else html+=`<div class="gcard"><p class="small muted" style="margin:0">Spotters give a first name and an email. Only the first name shows. <a href="privacy.html">Privacy</a></p></div>`;
+  $('side').innerHTML=html;
+  const rm=$('rm');if(rm)rm.onclick=async()=>{if(!confirm('Remove this goal for everyone?'))return;try{await GG.api.remove(v.id,GG.mine()[v.id]);GG.forget(v.id);location.href='board.html'}catch(x){GG.toast(x.message)}};
+ }
+ $('pin').addEventListener('click',e=>{const b=e.target.closest('button[data-act]');if(!b||!v)return;GG.act(b.dataset.act,v.id,v,g=>{v=GG.viewReal(g);draw()})});
+ if(await load())draw();
+});
+</script></body></html>

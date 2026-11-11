@@ -1,0 +1,8 @@
+name = "goal-groups"
+pages_build_output_dir = "public"
+compatibility_date = "2026-11-06"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "goal-groups"
+database_id = "58eed98b-66c7-4755-92ea-83e8ada84b55"

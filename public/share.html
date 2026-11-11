@@ -1,0 +1,58 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#132A21">
+<link rel="stylesheet" href="gg.css">
+<title>Be my spotter · Goal Groups</title>
+<style>
+body{background:radial-gradient(80% 60% at 50% 0%,#2a5242,var(--pine-dd) 70%);color:var(--snow);min-height:100vh}
+.swrap{display:grid;gap:36px;align-items:center;padding:40px 20px 80px}
+@media(min-width:900px){.swrap{grid-template-columns:auto 1fr;gap:64px;padding-top:64px}}
+.stage{display:flex;justify-content:center}
+.side h1{font-size:clamp(2.2rem,5vw,3.4rem);margin:12px 0 14px}
+.tog{display:inline-flex;background:rgba(255,255,255,.08);border-radius:999px;padding:4px;margin:6px 0 22px}
+.tog button{font:inherit;font-weight:600;font-size:.88rem;border:0;background:transparent;color:#cfe0d6;padding:9px 16px;border-radius:999px;cursor:pointer}
+.tog button.on{background:var(--snow);color:var(--ink)}
+.linkbox{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.linkbox input{flex:1 1 240px;background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:#fff;font-size:.86rem}
+.side .tip{font-size:.84rem;color:#93ad9f;margin-top:14px}
+.picker{margin-top:26px}
+.picker select{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:#fff;max-width:420px}
+.picker option{color:var(--ink)}
+</style></head><body>
+<div class="preview-note">Early version · goals posted here are shared on the board · example pins are fictional and marked · <a href="privacy.html" style="color:inherit">Privacy</a></div>
+<div class="sticky-nav"><div class="wrap nav">
+ <a class="logo" href="index.html" data-logo>Goal Groups</a>
+ <nav class="nav-links"><a href="index.html#how">How it works</a><a href="share.html">Share</a><a href="index.html#reputation">Reputation</a><a href="board.html">The board</a><a href="index.html#faq">FAQ</a></nav>
+ <a class="btn sm" href="post.html">Post a goal</a>
+</div></div>
+<main class="wrap swrap">
+ <div class="stage" id="stage"></div>
+ <div class="side on-dark">
+  <span class="eyebrow">Share card</span>
+  <h1>Ask for spotters, <em class="hl">not likes.</em></h1>
+  <p class="lede">Post this to Reels, TikTok or Stories. One tap to spot, and every check-in after that builds your reputation.</p>
+  <div class="tog" role="tablist"><button type="button" class="on" data-f="story">9:16 Story</button><button type="button" data-f="square">1:1 Square</button></div>
+  <div class="linkbox"><input type="text" id="link" readonly aria-label="Spotter link"><button type="button" class="btn" id="copy">Copy link</button></div>
+  <p class="tip" id="tip">The link opens your goal page, where anyone can tap Spot. To post the card, screenshot it and put the link in your bio.</p>
+  <div class="picker"><label class="small" for="pick" style="color:#a9c4b6;display:block;margin-bottom:6px">Preview another goal</label><select id="pick"></select></div>
+ </div>
+</main>
+<script src="gg.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded',async()=>{
+ const q=new URLSearchParams(location.search);let id=q.get('id')||'dolores-14er';let sq=q.get('format')==='square';
+ const pick=document.getElementById('pick');const cache={};
+ const b=await GG.loadBoard();b.pins.forEach(p=>cache[p.id]=p);
+ async function get(i){if(cache[i])return cache[i];try{return cache[i]=await GG.getPin(i)}catch(e){GG.toast('That goal wasn’t found. Showing an example.');return GG.getExample('dolores-14er')}}
+ const opts=()=>Object.values(cache).map(p=>'<option value="'+GG.esc(p.id)+'">'+GG.esc((p.example?'Example · ':'')+p.by+' · '+p.title)+'</option>').join('');
+ async function draw(){const v=await get(id);id=v.id;pick.innerHTML=opts();pick.value=v.id;document.getElementById('stage').innerHTML=GG.shareHTML(v,sq);
+  document.querySelectorAll('.tog button').forEach(b=>b.classList.toggle('on',(b.dataset.f==='square')===sq));
+  document.getElementById('link').value=v.example?'Examples have no spotter link':location.origin+'/goal.html?id='+encodeURIComponent(v.id);
+  document.getElementById('copy').disabled=!!v.example}
+ document.querySelector('.tog').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;sq=b.dataset.f==='square';draw()});
+ pick.addEventListener('change',()=>{id=pick.value;draw()});
+ document.getElementById('copy').addEventListener('click',async()=>{const el=document.getElementById('link');try{await navigator.clipboard.writeText(el.value);GG.toast('Spotter link copied.')}catch(e){el.select();document.execCommand&&document.execCommand('copy');GG.toast('Link selected. Copy it from the box.')}});
+ draw();
+});
+</script></body></html>

@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Goal Groups · Post a goal. Gather your spotters.</title>
+<meta name="description" content="Post a goal. Gather your spotters. Build a reputation for showing up.">
+<meta name="theme-color" content="#132A21">
+<link rel="stylesheet" href="gg.css">
+<style>
+
+.hero{background:var(--pine-dd);color:var(--snow);overflow:hidden;overflow:clip;padding:0 0 64px}
+.hero .topo-bg svg{color:#9fd0b6;opacity:.14}
+.hero-glow{position:absolute;z-index:-1;width:min(620px,120vw);height:620px;right:-120px;top:40px;border-radius:50%;background:radial-gradient(circle,rgba(232,131,90,.38),transparent 65%);filter:blur(10px)}
+.hero-grid{display:grid;gap:44px;align-items:center;padding-top:36px}
+@media(min-width:980px){.hero-grid{grid-template-columns:1.12fr .88fr;padding-top:64px}.hero{padding-bottom:110px}}
+.hero h1{margin:18px 0 22px;font-size:clamp(2.3rem,6.2vw,4.2rem)}
+.hero .lede{color:#cfe0d6;margin-bottom:30px}
+.trust{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:26px;font-size:.84rem;color:#a9c4b6}
+.trust span::before{content:"\2713";color:var(--ember);margin-right:6px;font-weight:700}
+@media(max-width:619px){#pins .pin:nth-child(n+5){display:none}}
+/* why */
+.why h2{max-width:780px}
+.stats{display:grid;gap:16px;margin:40px 0 28px}
+@media(min-width:820px){.stats{grid-template-columns:repeat(3,1fr)}}
+.stat{background:var(--snow);border-radius:var(--r);padding:26px;box-shadow:var(--shadow);border-top:4px solid var(--glow)}
+.stat .num{font-family:Fraunces,serif;font-size:clamp(2.4rem,6vw,3.2rem);font-weight:600;letter-spacing:-.03em;line-height:1;color:var(--pine-d)}
+.stat .num small{font-size:.45em;font-weight:500;color:var(--stone);letter-spacing:0}
+.stat p{margin:10px 0 0;color:var(--stone);font-size:.95rem}
+.stat sup a,.fn a{color:var(--glow-d);text-decoration:none;font-weight:700}
+.pull{font-family:Fraunces,serif;font-size:clamp(1.4rem,3.4vw,2rem);line-height:1.2;max-width:820px;margin:8px 0 0;font-weight:500;font-variation-settings:"SOFT" 100}
+.pull em{color:var(--glow-d)}
+/* board */
+.board-sec{background:linear-gradient(180deg,var(--aspen),#ebe0cd)}
+.board-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:18px;margin-bottom:30px}
+.board-head p{margin:0}
+.sample-note{font-size:.76rem;color:#f6ead6;margin:18px 0 0;text-align:center;opacity:.9}
+/* steps */
+.steps{display:grid;gap:18px;counter-reset:s}
+@media(min-width:860px){.steps{grid-template-columns:repeat(3,1fr)}}
+.step{background:var(--snow);border-radius:var(--r);padding:26px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.step .n{font-family:Fraunces,serif;font-size:3.4rem;line-height:1;color:var(--glow);font-weight:600;opacity:.9}
+.step h3{margin:12px 0 8px}
+.step p{color:var(--stone);margin:0;font-size:.95rem}
+.step .tag{display:inline-block;margin-top:14px;font-size:.74rem;font-weight:700;color:var(--pine);background:var(--paper3);padding:4px 9px;border-radius:8px}
+/* witness */
+.witness-sec{background:var(--ink);color:var(--aspen);overflow:hidden}
+.witness-sec .topo-bg svg{color:#9fd0b6;opacity:.07}
+.wgrid{display:grid;gap:40px;align-items:center}
+@media(min-width:940px){.wgrid{grid-template-columns:1fr 1fr}}
+.ladder{list-style:none;padding:0;margin:28px 0 0;display:grid;gap:10px}
+.ladder li{display:grid;grid-template-columns:42px 1fr;gap:14px;align-items:center;padding:12px 14px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06)}
+.ladder li b{display:block;color:var(--snow);font-weight:600}
+.ladder li span.d{font-size:.86rem;color:#a9c4b6}
+.ladder .ic{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:rgba(232,131,90,.14);color:var(--ember);font-family:Fraunces,serif;font-weight:700}
+.profile{background:var(--snow);color:var(--ink);border-radius:24px;padding:26px;box-shadow:0 30px 60px -20px rgba(0,0,0,.5);max-width:440px;margin:0 auto;width:100%}
+.prof-top{display:flex;gap:14px;align-items:center}
+.avatar{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--glow),#f2b48f);display:grid;place-items:center;color:#fff;font-family:Fraunces,serif;font-weight:700;font-size:1.4rem;flex:none}
+.tierchip{display:inline-flex;align-items:center;gap:6px;background:var(--ink);color:var(--snow);font-weight:700;font-size:.8rem;padding:6px 11px;border-radius:999px;margin-top:4px}
+.tierchip i{font-style:normal;color:var(--ember)}
+.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}
+.metrics div{background:var(--aspen);border-radius:14px;padding:12px;text-align:center}
+.metrics b{display:block;font-family:Fraunces,serif;font-size:1.6rem;line-height:1.1}
+.metrics span{font-size:.74rem;color:var(--stone)}
+.feed{display:grid;gap:8px;font-size:.88rem}
+.feed div{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:12px;background:#f6f1e7}
+.feed div span:last-child{color:var(--stone);white-space:nowrap}
+.fn{font-size:.78rem;color:#93ad9f;margin-top:22px}
+/* social */
+.social-grid{display:grid;gap:40px;align-items:center;grid-template-columns:minmax(0,1fr)}.social-grid>*{min-width:0}
+@media(min-width:940px){.social-grid{grid-template-columns:.95fr 1.05fr}}
+.phones{display:flex;gap:18px;justify-content:center;align-items:flex-end}
+.phone{--pw:248px;width:var(--pw);flex:none;border-radius:38px;padding:10px;background:#0e1713;box-shadow:0 40px 70px -24px rgba(19,42,33,.55)}
+.phone .screen{width:calc(var(--pw) - 20px);aspect-ratio:9/16;border-radius:30px;overflow:hidden;position:relative}
+.phone .screen>.sc{position:absolute;top:0;left:0;width:360px;max-width:none;transform:scale(.6333);transform-origin:0 0;border-radius:0;box-shadow:none}
+.phone.alt{--pw:212px;transform:translateY(-26px) rotate(3deg)}
+.phone.alt .screen>.creator{height:100%}
+@media(max-width:620px){.phone.alt{display:none}.phone{--pw:270px}}
+.creator{background:var(--snow);border-radius:30px;overflow:hidden;height:100%;display:flex;flex-direction:column;font-size:.82rem;aspect-ratio:9/16}
+.creator .cv{flex:none;height:33%;background:radial-gradient(80% 80% at 70% 20%,#f2b48f,transparent 60%),linear-gradient(160deg,#2F5D4A,#132A21);position:relative;display:flex;align-items:flex-end;padding:14px;color:#fff}
+.creator .cv .play{position:absolute;inset:0;display:grid;place-items:center}
+.creator .cv .play span{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.22);display:grid;place-items:center;font-size:1.1rem;backdrop-filter:blur(4px)}
+.creator .cb{padding:12px;display:flex;flex-direction:column;gap:6px;flex:1;min-height:0}
+.creator h4{font-family:Fraunces,serif;font-size:1rem;line-height:1.15;margin:0}
+.creator .cd{background:var(--ink);color:#fff;border-radius:12px;padding:10px;font-weight:600}
+.creator .cd b{color:var(--ember)}
+.creator .btn{padding:10px;font-size:.82rem;margin-top:auto}
+.bullets{list-style:none;padding:0;margin:22px 0 28px;display:grid;gap:14px}
+.bullets li{display:grid;grid-template-columns:28px 1fr;gap:12px}
+.bullets li::before{content:"";width:28px;height:28px;border-radius:9px;background:var(--paper2) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M6 12.5l4 4 8-9' fill='none' stroke='%23D2683F' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/16px no-repeat}
+.bullets b{display:block}
+.bullets span{color:var(--stone);font-size:.94rem}
+/* first quests + hosts */
+.quests{display:grid;gap:16px;margin:28px 0 0}
+@media(min-width:760px){.quests{grid-template-columns:repeat(3,1fr)}}
+.quest{border-radius:var(--r);overflow:hidden;background:var(--snow);box-shadow:var(--shadow)}
+.quest .art{height:120px;position:relative;overflow:hidden}
+.quest .art svg{position:absolute;inset:0;width:100%;height:100%}
+.quest .qb{padding:18px 20px 20px}
+.quest h3{font-size:1.15rem;margin:0 0 6px}
+.quest p{margin:0;color:var(--stone);font-size:.9rem}
+.hosts{margin-top:56px;display:grid;gap:26px;align-items:center;background:var(--pine-d);color:var(--snow);border-radius:28px;padding:32px;position:relative;overflow:hidden;isolation:isolate}
+@media(min-width:900px){.hosts{grid-template-columns:1.1fr .9fr;padding:48px}}
+.hosts .topo-bg svg{color:#9fd0b6;opacity:.1}
+.hosts ul{margin:0;padding:0;list-style:none;display:grid;gap:12px}
+.hosts li{padding:14px 16px;border-radius:14px;background:rgba(255,255,255,.06)}
+.hosts li b{display:block}
+.hosts li span{color:#b9d2c4;font-size:.9rem}
+/* faq */
+.faq details{background:var(--snow);border-radius:16px;padding:0 22px;margin-bottom:12px;box-shadow:0 1px 2px rgba(23,34,29,.05)}
+.faq summary{cursor:pointer;list-style:none;padding:20px 30px 20px 0;font-weight:600;font-size:1.05rem;position:relative}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:0;top:14px;font-size:1.6rem;font-weight:400;color:var(--glow-d);transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{margin:0 0 20px;color:var(--stone)}
+/* closing */
+.closing{background:var(--pine-dd);color:var(--snow);text-align:center;overflow:hidden}
+.closing .topo-bg svg{color:#9fd0b6;opacity:.12}
+.mock-email{display:flex;gap:10px;max-width:460px;margin:28px auto 8px;flex-wrap:wrap;justify-content:center}
+.mock-email input{flex:1 1 220px;background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);color:#fff}
+.mock-email input::placeholder{color:#93ad9f}
+
+/* hero visual: reputation first */
+.hero-vis{position:relative;max-width:440px;width:100%;margin:0 auto;padding:26px 0 40px}
+.hero-vis .profile{position:relative;z-index:2;transform:rotate(-1.5deg)}
+.notif{position:absolute;z-index:3;display:flex;gap:10px;align-items:center;background:var(--snow);color:var(--ink);border-radius:16px;padding:10px 14px;font-size:.84rem;box-shadow:0 18px 36px -12px rgba(0,0,0,.55);max-width:270px;animation:bob 4s ease-in-out infinite}
+.notif b{font-weight:700}.notif small{display:block;color:var(--stone);font-size:.74rem}
+.notif .dot{width:34px;height:34px;flex:none;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:700;font-family:Fraunces,serif}
+.notif.n1{top:-6px;right:-18px}.notif.n1 .dot{background:linear-gradient(135deg,var(--pine),#6aa186)}
+.notif.n2{bottom:4px;left:-26px;animation-delay:-2s}.notif.n2 .dot{background:linear-gradient(135deg,var(--glow),#f2b48f)}
+@keyframes bob{50%{transform:translateY(-6px)}}
+@media(max-width:620px){.notif.n1{right:-4px;top:-14px}.notif.n2{left:-4px;bottom:0}.hero-vis{padding:34px 0 52px}}
+.bigtier{display:flex;align-items:center;gap:12px;margin:18px 0 4px;padding:14px 16px;border-radius:16px;background:var(--ink);color:var(--snow)}
+.bigtier .gem{font-family:Fraunces,serif;font-weight:700;font-size:2rem;line-height:1;color:var(--ember)}
+.bigtier b{display:block;font-size:1rem}.bigtier span{font-size:.8rem;color:#b9d2c4}
+/* tiers */
+.tiers{display:grid;gap:12px;grid-template-columns:repeat(2,1fr);margin:28px 0 0}
+@media(min-width:760px){.tiers{grid-template-columns:repeat(4,1fr)}}
+.tier{border-radius:16px;padding:18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
+.tier .g{font-family:Fraunces,serif;font-size:2.4rem;font-weight:700;line-height:1;color:var(--snow)}
+.tier.s{background:linear-gradient(160deg,rgba(232,131,90,.28),rgba(232,131,90,.06));border-color:rgba(232,131,90,.4)}
+.tier.s .g{color:var(--ember)}
+.tier p{margin:8px 0 0;font-size:.84rem;color:#a9c4b6}
+.rep-metrics{display:grid;gap:12px;grid-template-columns:repeat(3,1fr);margin-top:30px}
+.rep-metrics div{border-radius:16px;padding:16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07)}
+.rep-metrics b{display:block;font-family:Fraunces,serif;font-size:1.25rem;color:var(--snow);line-height:1.15}
+.rep-metrics span{font-size:.82rem;color:#a9c4b6}
+@media(max-width:620px){.rep-metrics{grid-template-columns:1fr}}
+/* witness cards */
+.wcards{display:grid;gap:16px;margin-top:30px}
+@media(min-width:820px){.wcards{grid-template-columns:repeat(3,1fr)}}
+.wcard{background:var(--snow);border-radius:var(--r);padding:22px;box-shadow:var(--shadow)}
+.wcard .ico{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:var(--paper2);font-size:1.3rem;margin-bottom:12px}
+.wcard h3{font-size:1.15rem;margin:0 0 6px}.wcard p{margin:0;color:var(--stone);font-size:.93rem}
+
+</style>
+</head>
+<body>
+<div class="preview-note">Early version · goals posted here are shared on the board · example pins are fictional and marked · <a href="privacy.html" style="color:inherit">Privacy</a></div>
+<div class="sticky-nav"><div class="wrap nav">
+ <a class="logo" href="index.html" data-logo>Goal Groups</a>
+ <nav class="nav-links"><a href="#how">How it works</a><a href="#social">Share</a><a href="#reputation">Reputation</a><a href="#board">The board</a><a href="#faq">FAQ</a></nav>
+ <a class="btn sm" href="post.html">Post a goal</a>
+</div></div>
+
+<header class="hero grain">
+ <div class="topo-bg" data-topo="3"></div><div class="hero-glow"></div>
+ <div class="wrap hero-grid">
+  <div>
+   <span class="eyebrow">We stopped showing up for each other</span>
+   <h1>Post a goal. Gather your spotters. <em class="hl">Build a reputation for showing up.</em></h1>
+   <p class="lede">Say the thing you’re going to do. Invite the people who’ll watch you do it. Every spotted check-in builds a record of someone who shows up. Crew does it with you. Spotters keep an eye on you.</p>
+   <div class="btn-row"><a class="btn" href="post.html">Post a goal</a><a class="btn ghost" href="board.html">Browse the board</a></div>
+   <div class="trust"><span>Free</span><span>First name and town only</span><span>Spotters see check-ins, not your life</span></div>
+  </div>
+  <div class="hero-vis" aria-label="Example reputation profile">
+   <div class="notif n1"><span class="dot">M</span><span><b>Maren is spotting you</b><small>Read 24 books in 2027</small></span></div>
+   <div class="profile">
+    <div class="prof-top"><div class="avatar">L</div><div><b style="font-size:1.1rem">Lena</b><div class="muted small">Montrose, CO · sample profile</div></div></div>
+    <div class="bigtier"><span class="gem">S</span><span><b>S-tier · Shows up</b><span>14 goals · 93% show-up rate</span></span></div>
+    <div class="metrics"><div><b>14</b><span>goals finished</span></div><div><b>93%</b><span>show-up rate</span></div><div><b>31</b><span>spotters</span></div></div>
+    <div class="feed">
+     <div><span>✓ Checked in · book 3 of 24</span><span>4 saw it</span></div>
+     <div><span>🏁 Finished · first half marathon</span><span>Oct</span></div>
+     <div><span>👁 Spotting · Maren’s first 14er</span><span>Dolores</span></div>
+    </div>
+   </div>
+   <div class="notif n2"><span class="dot">✓</span><span><b>Check-in spotted</b><small>Show-up rate up to 93%</small></span></div>
+  </div>
+ </div>
+</header>
+
+<section id="how">
+ <div class="wrap">
+  <span class="eyebrow">How it works</span>
+  <h2 style="margin-top:10px">Three steps. No willpower required.</h2>
+  <div class="steps" style="margin-top:34px">
+   <div class="step reveal"><div class="n">1</div><h3>Post a goal</h3><p>Make it specific and dated: “First 14er by July,” not “get outside more.” Pin it to the board or keep it to your people.</p><span class="tag">Takes a minute</span></div>
+   <div class="step reveal"><div class="n">2</div><h3>Gather your spotters</h3><p>Share your card. Spotters follow your check-ins and notice when you go quiet. Want company too? Open a crew; it starts once it fills. Crew does it with you. Spotters keep an eye on you.</p><span class="tag">Spotters first, crew optional</span></div>
+   <div class="step reveal"><div class="n">3</div><h3>Build a reputation for showing up</h3><p>Every spotted check-in counts. Show-ups, check-in rate and goals finished add up to a tier people can trust.</p><span class="tag">S-tier · 93% show-up rate</span></div>
+  </div>
+ </div>
+</section>
+
+<section id="social" style="background:#ebe0cd">
+ <div class="wrap social-grid">
+  <div class="phones reveal" id="phones">
+   <div class="phone"><div class="screen" id="phoneShare"></div></div>
+   <div class="phone alt"><div class="screen"><div class="creator">
+    <div class="cv"><div class="play"><span>▶</span></div><span style="font-weight:600;font-size:.78rem">@devruns · creator quest</span></div>
+    <div class="cb"><h4>Couch-to-5K with Dev. Total beginners only.</h4><div class="muted">8 weeks · Denver + remote</div><div class="cd"><b>212</b> spotters · crew locks in 3d</div><span class="btn">Spot the quest</span></div>
+   </div></div></div>
+  </div>
+  <div>
+   <span class="eyebrow">Be my spotter</span>
+   <h2 style="margin-top:10px">Your goal is the post.</h2>
+   <p class="lede">Every goal turns into a “be my spotter” card sized for Reels, TikTok and Stories. Post it, and the people who already follow you become the ones keeping you honest.</p>
+   <ul class="bullets">
+    <li><span><b>Ask for spotters, not likes</b><span>One tap to spot. They see your check-ins and the finish.</span></span></li>
+    <li><span><b>Creator quest pages</b><span>Run a challenge for your audience. Followers spot, and the bold ones join the crew.</span></span></li>
+    <li><span><b>Proof makes the next post</b><span>Check-ins and finishes write the follow-up for you: “Day 30. Done. 41 people watched.”</span></span></li>
+   </ul>
+   <div class="btn-row"><a class="btn" href="share.html?id=dolores-14er">See a share card</a><a class="btn ghost" href="post.html" style="color:var(--ink)">Make your own</a></div>
+  </div>
+ </div>
+</section>
+
+<section class="witness-sec grain" id="reputation">
+ <div class="topo-bg" data-topo="9"></div>
+ <div class="wrap on-dark">
+  <span class="eyebrow">Reputation</span>
+  <h2 style="margin-top:10px;max-width:820px">Status here comes from <em class="hl">showing up.</em> Not from being fast, fit or loud.</h2>
+  <p class="lede">Your reputation is a simple record of what you said you’d do and whether people saw you do it.</p>
+  <div class="rep-metrics">
+   <div><b>Show-ups</b><span>Spotted check-ins on the days you said you’d show.</span></div>
+   <div><b>Show-up rate</b><span>How often you show when you said you would.</span></div>
+   <div><b>Goals finished</b><span>Goals that crossed the line, spotted.</span></div>
+  </div>
+  <div class="tiers">
+   <div class="tier"><div class="g">C</div><p>Just started. Everyone begins here.</p></div>
+   <div class="tier"><div class="g">B</div><p>Showing up more often than not.</p></div>
+   <div class="tier"><div class="g">A</div><p>Reliable. Finished at least one goal.</p></div>
+   <div class="tier s"><div class="g">S</div><p>Shows up. Like Lena: 14 goals, 93% show-up rate.</p></div>
+  </div>
+  <ol class="ladder" style="max-width:720px">
+   <li><span class="ic">1</span><span><b>Goal-setter</b><span class="d">You posted it. That’s the hard part.</span></span></li>
+   <li><span class="ic">2</span><span><b>Crew</b><span class="d">You found people doing the same thing.</span></span></li>
+   <li><span class="ic">3</span><span><b>Finisher</b><span class="d">You crossed the line with people watching.</span></span></li>
+   <li><span class="ic">4</span><span><b>Spotter</b><span class="d">You keep someone else honest.</span></span></li>
+   <li><span class="ic">5</span><span><b>Mentor</b><span class="d">Earned with reputation, never bought.</span></span></li>
+  </ol>
+ </div>
+</section>
+
+<section id="witness">
+ <div class="wrap">
+  <span class="eyebrow">Spotting</span>
+  <h2 style="margin-top:10px">Be someone’s spotter. <span style="color:var(--glow-d)">It’ll keep you going.</span></h2>
+  <p class="lede">Spotting is the lightest way to back someone, and research on advice-giving suggests the person doing the encouraging gets a boost too.<sup><a href="#fn4" style="color:var(--glow-d);text-decoration:none;font-weight:700">4</a></sup></p>
+  <div class="wcards">
+   <div class="wcard reveal"><div class="ico">👁</div><h3>See the check-ins</h3><p>A quiet feed of the days they showed up. No group chat to keep up with.</p></div>
+   <div class="wcard reveal"><div class="ico">👏</div><h3>Nudge when it’s quiet</h3><p>If a week goes by without a check-in, you’ll know. One tap sends a nudge.</p></div>
+   <div class="wcard reveal"><div class="ico">🏁</div><h3>Be there at the finish</h3><p>When they finish, you’re in the photo. Spotting counts toward your reputation too.</p></div>
+  </div>
+ </div>
+</section>
+
+<section class="board-sec" id="board">
+ <div class="wrap">
+  <div class="board-head">
+   <div><span class="eyebrow">The commitment board</span><h2 style="margin-top:10px">Like the cork board outside the grocery store.<br><span style="color:var(--pine)">Except people show up.</span></h2>
+   <p class="lede">“Looking for.” “In need of.” “Trying to achieve.” Spot a goal you believe in, or join a crew that’s still filling.</p></div>
+   <a class="btn ghost" href="board.html" style="color:var(--ink)">See the whole board →</a>
+  </div>
+  <div class="cork">
+   <div class="chips" id="chips"></div>
+   <div class="pins" id="pins"></div>
+   <p class="sample-note" id="exnote">Pins marked Example are fictional. Real goals show first.</p>
+  </div>
+ </div>
+</section>
+
+<section class="why" id="why">
+ <div class="wrap">
+  <span class="eyebrow">Why now</span>
+  <h2>We stopped showing up for each other.</h2>
+  <p class="lede">The goals didn’t go anywhere: the first big climb, the race, the thing you want to build. The people we used to do them with did.</p>
+  <div class="stats">
+   <div class="stat reveal"><div class="num">60<small> → </small>36<small> min/day</small></div><p>In-person socializing among Americans aged 15 to 24, 2003 vs 2024.<sup><a href="#fn1">1</a></sup></p></div>
+   <div class="stat reveal"><div class="num">~½</div><p>The drop in time Americans spend attending or hosting social events since 2003.<sup><a href="#fn2">2</a></sup></p></div>
+   <div class="stat reveal"><div class="num">2.8h<small> vs </small>0.5h</div><p>Daily TV vs. socializing for U.S. men in 2025, on an average day.<sup><a href="#fn3">3</a></sup></p></div>
+  </div>
+  <p class="pull reveal">Willpower is overrated. <em>Spotters aren’t.</em> You don’t need more discipline. You need people who notice when you don’t show up.</p>
+  <p class="muted small" style="margin-top:14px;max-width:760px">Our line, inspired by Modern Wisdom #1158, Chris Williamson’s conversation with psychologist Angela Duckworth (Oct 2026), which covers why groups make goals easier and why modern life is making us more isolated.<sup><a href="#fn5">5</a></sup></p>
+ </div>
+</section>
+
+<section style="background:#ebe0cd" id="first">
+ <div class="wrap">
+  <span class="eyebrow">First quests</span>
+  <h2 style="margin-top:10px">Starting with things that already have a start date.</h2>
+  <p class="lede">Some of the first goals plug into beginner programs local hosts already run in Denver. Same spotters, same reputation, with a coach out front.</p>
+  <div class="quests">
+   <div class="quest reveal"><div class="art"><svg viewBox="0 0 300 120" preserveAspectRatio="xMidYMid slice"><rect width="300" height="120" fill="#2F5D4A"/><path d="M0 92 Q75 60 150 84 T300 70 V120 H0Z" fill="#244a3b"/><path d="M-10 104 C60 96 110 112 170 100 S260 88 310 98" fill="none" stroke="#F4B183" stroke-width="3" stroke-dasharray="2 9" stroke-linecap="round"/><circle cx="242" cy="34" r="16" fill="#E8835A"/></svg></div><div class="qb"><h3>A first 5K</h3><p>Eight weeks with a local run club’s beginner group.</p></div></div>
+   <div class="quest reveal"><div class="art"><svg viewBox="0 0 300 120" preserveAspectRatio="xMidYMid slice"><rect width="300" height="120" fill="#22312A"/><path d="M0 120 L80 30 L130 80 L190 10 L300 120Z" fill="#2F5D4A"/><path d="M190 10 L172 30 L184 28 L196 40 L206 26Z" fill="#FFFDF8" opacity=".85"/><g fill="#E8835A"><circle cx="70" cy="70" r="5"/><circle cx="120" cy="58" r="4"/><circle cx="150" cy="44" r="5"/><circle cx="96" cy="88" r="4"/></g></svg></div><div class="qb"><h3>A first climb</h3><p>An intro series at a climbing gym, crew of 4 to 6.</p></div></div>
+   <div class="quest reveal"><div class="art"><svg viewBox="0 0 300 120" preserveAspectRatio="xMidYMid slice"><rect width="300" height="120" fill="#E8835A"/><rect x="60" y="56" width="180" height="8" rx="4" fill="#17221D"/><rect x="74" y="34" width="16" height="52" rx="4" fill="#17221D"/><rect x="210" y="34" width="16" height="52" rx="4" fill="#17221D"/><rect x="94" y="42" width="10" height="36" rx="3" fill="#17221D" opacity=".8"/><rect x="196" y="42" width="10" height="36" rx="3" fill="#17221D" opacity=".8"/></svg></div><div class="qb"><h3>A first barbell</h3><p>A coached beginner strength block, three weeks to form.</p></div></div>
+  </div>
+
+  <div class="hosts grain" id="hosts">
+   <div class="topo-bg" data-topo="5"></div>
+   <div>
+    <span class="eyebrow" style="color:var(--ember)">For hosts</span>
+    <h2 style="margin-top:10px">Run a club, gym, or class? Fill sessions three and four.</h2>
+    <p style="color:#cfe0d6">Goal Groups gives your beginners spotters and a reputation to protect before day one. Keep your group chat and your people. We handle the check-ins.</p>
+    <span class="btn light disabled" aria-disabled="true">Host pilot opens soon</span>
+   </div>
+   <ul>
+    <li><b>Members with spotters show up</b><span>People with an audience and a streak don’t ghost week three.</span></li>
+    <li><b>Nothing to install</b><span>Members bring their own spotters. You run the session.</span></li>
+    <li><b>Attendance in your pocket</b><span>A QR check-in roster for each session.</span></li>
+   </ul>
+  </div>
+ </div>
+</section>
+
+<section class="faq" id="faq">
+ <div class="wrap narrow">
+  <span class="eyebrow">FAQ</span>
+  <h2 style="margin-top:10px">Fair questions.</h2>
+  <details open><summary>What is Goal Groups?</summary><p>A place to post a goal, gather spotters who see you show up, and build a reputation for following through. Crews are there when you want company.</p></details>
+  <details><summary>What does a spotter do?</summary><p>A spotter follows your check-ins and cheers you on. Crew does it with you. Spotters keep an eye on you. It’s a light way to back someone, and it tends to keep the spotter going too.</p></details>
+  <details><summary>How does reputation work?</summary><p>It’s built from three things: spotted show-ups, your show-up rate, and goals finished. Those roll up into a tier from C to S. You can’t buy it; you can only show up for it.</p></details>
+  <details><summary>What does “locks when it fills” mean?</summary><p>If you open a crew, it starts once enough people join, like 6 of 8. If it doesn’t fill by its deadline, it rolls into a new round. Solo goals with spotters start whenever you say.</p></details>
+  <details><summary>Is it safe to post goals publicly?</summary><p>Pins only show a first name and a town, never an address. Spotters see check-ins, not your location. First meetups for crews are meant for public places, and you can stay remote.</p></details>
+  <details><summary>Is this only in Colorado?</summary><p>We’re starting in Colorado, beginning with Denver, but plenty of goals work remotely, like writing, building and habits. Post one from anywhere.</p></details>
+ </div>
+</section>
+
+<section class="closing grain">
+ <div class="topo-bg" data-topo="11"></div>
+ <div class="wrap narrow">
+  <span class="eyebrow" style="color:var(--ember)">January’s coming either way</span>
+  <h2 style="margin-top:12px">Post the goal. Gather your spotters.</h2>
+  <p style="color:#cfe0d6">Become someone who shows up, on the record.</p>
+  <div class="btn-row" style="justify-content:center;margin-top:24px"><a class="btn" href="post.html">Post a goal</a><a class="btn ghost" href="board.html">Browse the board</a></div>
+ </div>
+</section>
+
+<footer class="site">
+ <div class="wrap">
+  <div class="cols">
+   <div><a class="logo" href="index.html" data-logo style="color:#fff">Goal Groups</a><p style="margin-top:12px;max-width:340px">Post a goal. Gather your spotters. Build a reputation for showing up.</p></div>
+   <div><h4>Product</h4><ul><li><a href="board.html">The board</a></li><li><a href="post.html">Post a goal</a></li><li><a href="share.html?id=dolores-14er">Share cards</a></li><li><a href="#hosts">For hosts</a></li></ul></div>
+   <div><h4>About this preview</h4><ul><li><a href="privacy.html">Privacy</a></li><li><a href="preview.html">About this preview</a></li><li><a href="#faq">FAQ</a></li><li>Early version</li></ul></div>
+  </div>
+  <ol class="fn" style="margin-top:36px;padding-left:18px;display:grid;gap:4px">
+   <li id="fn1">American Time Use Survey, 2003 and 2024, as reported by the <a href="https://www.psychologicalscience.org/news/1-7-million-unspoken-words.html">Association for Psychological Science</a> (May 2026); see also <a href="https://www.axios.com/2026/07/05/americans-socializing-decline">Axios</a>.</li>
+   <li id="fn2">Time spent attending or hosting social events, ATUS 2003 to 2024, per <a href="https://www.derekthompson.org/p/the-death-of-partying-in-the-usaand">Derek Thompson</a> (Jul 2025) and <a href="https://reason.com/2025/07/11/americans-dont-party-enough-heres-how-to-change-that/">Reason</a>.</li>
+   <li id="fn3">U.S. Bureau of Labor Statistics, <a href="https://www.bls.gov/news.release/atus.t01.htm">ATUS 2025, Table 1</a>: men 15+, watching TV 2.81 h/day, socializing and communicating 0.52 h/day.</li>
+   <li id="fn4">Eskreis-Winkler, Milkman, Gromet &amp; Duckworth, “<a href="https://www.pnas.org/doi/10.1073/pnas.1908779116">A large-scale field experiment shows giving advice improves academic outcomes for the advisor</a>,” PNAS (2019). Randomized study of 1,982 U.S. high school students.</li>
+   <li id="fn5">Inspiration, not a quote: Modern Wisdom #1158, “Willpower Expert: The Secret To Effortless Discipline,” with Angela Duckworth, Oct 3 2026 (<a href="https://podcasts.apple.com/us/podcast/willpower-expert-the-secret-to-effortless-discipline/id1347973549?i=1000792938047">episode page</a>). “We stopped showing up for each other” is our phrasing.</li>
+  </ol>
+  <p class="small" style="margin-top:24px;color:#7fa391">© 2026 Goal Groups · Colorado · Example pins and profiles are fictional. <a href="privacy.html" style="color:inherit">Privacy</a></p>
+ </div>
+</footer>
+
+<script src="gg.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+ GG.mountBoard(document.getElementById('pins'),{limit:6,chips:document.getElementById('chips'),onDraw:st=>{document.getElementById('exnote').hidden=!st.showEx}});
+ const ps=document.getElementById('phoneShare');ps.innerHTML=GG.shareHTML(GG.getExample('dolores-14er'));const fit=()=>ps.firstElementChild.style.transform='scale('+(ps.clientWidth/360)+')';fit();addEventListener('resize',fit);
+});
+</script>
+</body>
+</html>
